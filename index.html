@@ -85,30 +85,25 @@
         </div>
         <br>
         <div style='display: flex; justify-content: space-between; width: 100%;'>
-            <label for='cb0'>Show tails</label>
+            <!-- below -->
+            <label for='cb0' style='text-decoration: line-through;'>Unrealistic collisions of balls (👎)</label>
             <input type='checkbox' style='padding: 0; margin: 0; height: 20px; width: 20px;' id='cb0'>
         </div>
         <br>
         <div style='display: flex; justify-content: space-between; width: 100%;'>
             <!-- below -->
-            <label for='cb1' style='text-decoration: line-through;'>Unrealistic collisions of balls (👎)</label>
+            <label for='cb1'>Play audio when balls bounce</label>
             <input type='checkbox' style='padding: 0; margin: 0; height: 20px; width: 20px;' id='cb1'>
         </div>
         <br>
         <div style='display: flex; justify-content: space-between; width: 100%;'>
-            <!-- below -->
-            <label for='cb2' style='text-decoration: line-through;'>Play audio when balls bounce</label>
+            <label for='cb2'>Constant changes in the color of the balls</label>
             <input type='checkbox' style='padding: 0; margin: 0; height: 20px; width: 20px;' id='cb2'>
         </div>
         <br>
         <div style='display: flex; justify-content: space-between; width: 100%;'>
-            <label for='cb3'>Constant changes in the color of the balls</label>
+            <label for='cb3'>Aim trainer mode (clickable balls)</label>
             <input type='checkbox' style='padding: 0; margin: 0; height: 20px; width: 20px;' id='cb3'>
-        </div>
-        <br>
-        <div style='display: flex; justify-content: space-between; width: 100%;'>
-            <label for='cb4'>Aim trainer mode (clickable balls)</label>
-            <input type='checkbox' style='padding: 0; margin: 0; height: 20px; width: 20px;' id='cb4'>
         </div>
     </div>
     <br>
@@ -127,11 +122,10 @@
     document.getElementById('t2').value = settings.speedT || '2.5';
     document.getElementById('t3').value = settings.radiusF || '15';
     document.getElementById('t4').value = settings.radiusT || '15';
-    document.getElementById('cb0').checked = settings.tail || false;
-    document.getElementById('cb1').checked = settings.collision || false;
-    document.getElementById('cb2').checked = settings.sound || false;
-    document.getElementById('cb3').checked = settings.color || false;
-    document.getElementById('cb4').checked = settings.aim || false;
+    document.getElementById('cb0').checked = settings.collision || false;
+    document.getElementById('cb1').checked = settings.sound || false;
+    document.getElementById('cb2').checked = settings.color || false;
+    document.getElementById('cb3').checked = settings.aim || false;
 
     let text = 'before you proceed...'.split('');
     var i = 0;
@@ -167,11 +161,10 @@
                 "speedT": Number(document.getElementById('t2').value),
                 "radiusF": Number(document.getElementById('t3').value),
                 "radiusT": Number(document.getElementById('t4').value),
-                "tail": document.getElementById('cb0').checked,
-                "collision": document.getElementById('cb1').checked,
-                "sound": document.getElementById('cb2').checked,
-                "color": document.getElementById('cb3').checked,
-                "aim": document.getElementById('cb4').checked
+                "collision": document.getElementById('cb0').checked,
+                "sound": document.getElementById('cb1').checked,
+                "color": document.getElementById('cb2').checked,
+                "aim": document.getElementById('cb3').checked
             };
             localStorage.setItem('settings', JSON.stringify(settings));
             location.href = 'balls.html';
@@ -190,10 +183,9 @@
     });
 
     // temp (probably)
-    let abandoned = [document.getElementById('cb1'), document.getElementById('cb2')];
-    abandoned.map((e) => e.addEventListener('click', (e) => {
-        alert(e.target === abandoned[0] ? `Well, I don't know how balls act after colliding\nTeach me the physics on Discord (@newyearnewaccount)` : `Well, I don't have the audio\nSend me yours on Discord (@newyearnewaccount)`);
-        abandoned.map((e) => e.checked = false);
-    }));
+    document.getElementById('cb0').addEventListener('click', () => {
+        document.getElementById('cb0').checked = false;
+        alert(`Well, I don't know how balls act after colliding\nTeach me the physics on Discord (@newyearnewaccount)`);
+    });
 </script>
 </html>

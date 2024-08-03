@@ -7,7 +7,14 @@ setInterval(() => {
     canvas.height = window.innerHeight;
 }, 1);
 var balls = [];
+const bounceSound = new Audio('BOUNCEBOUNCEBOUNCE.mp3');
 const settings = JSON.parse(localStorage.getItem('settings'));
+
+function play() {
+    if (settings.sound) {
+        bounceSound.play();
+    }
+}
 
 class ball {
     constructor() {
@@ -28,10 +35,10 @@ class ball {
     }
 
     draw() {
-        this.x - this.r <= 0 ? this.left = false : void(0);
-        this.x + this.r >= canvas.width ? this.left = true : void(0);
-        this.y - this.r <= 0 ? this.up = false : void(0);
-        this.y + this.r >= canvas.height ? this.up = true : void(0);
+        this.x - this.r <= 0 ? (this.left = false, play()) : void(0);
+        this.x + this.r >= canvas.width ? (this.left = true, play()) : void(0);
+        this.y - this.r <= 0 ? (this.up = false, play()) : void(0);
+        this.y + this.r >= canvas.height ? (this.up = true, play()) : void(0);
         ctx.fillStyle = (settings.color ? `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})` : this.color);
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
@@ -63,7 +70,6 @@ class ball {
 balls.push(new ball());
 
 function drawBalls() {
-    settings.tail ? void(0) : ctx.clearRect(0, 0, canvas.width, canvas.height);
     balls.forEach((ball) => {
         ball.draw();
         ball.XYUpdate();
@@ -74,7 +80,7 @@ function drawBalls() {
 requestAnimationFrame(drawBalls);
 
 function spawn() {
-    if (balls.length >= 100) {
+    if (balls.length >= 120) {
         alert('EXCEEDED THE MAXIMUM AMOUNT OF BALLS');
     } else {
         balls.push(new ball());
