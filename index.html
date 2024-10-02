@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <title>You like balls so do I</title>
+    <link rel="icon" href="images/baller.webp">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            user-select: none;
+            background: #0d1117;
+            height: 100vh;
+        }
+
+        * {
+            cursor: url('images/dot.svg') 16 16, auto;
+            margin: 0;
+            padding: 0;
+            font-family: 'Source Code Pro', sans-serif;
+            color: white;
+        }
+
+        input[type='number'] {
+            height: 25px;
+            width: 150px;
+            padding: 0;
+            margin: 0;
+            border: none;
+            background-color: transparent;
+            border-bottom: 1px solid rgba(192, 192, 192, 0.3);
+            text-align: center;
+            outline: none;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        input[type='checkbox'] {
+            padding: 0;
+            margin: 0;
+            height: 20px;
+            width: 20px;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            display: none;
+        }
+
+        #cB {
+            border: 1px solid rgba(192, 192, 192, 0.3);
+            border-width: 1px 1px 2px 2px;
+            border-radius: 10px;
+        }
+
+        #cB:hover {
+            transition: all 0.35s;
+            transform: scale(1.05);
+        }
+
+        input[type='checkbox']:hover {
+            transition: all 0.3s;
+            transform: scale(1.25);
+        }
+
+        ::placeholder {
+            color: #ff9999;
+        }
+
+        .reminder {
+            border-radius: 10px;
+            background: #2a2b2b;
+            height: 100px;
+            width: 500px;
+            position: absolute;
+            top: -100px;
+            border: 1px solid rgb(255, 150, 150);
+            transition: all 0.7s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div style='font-size: 50px; font-weight: bold;'>THE MOVING BALLS</div>
+    <div id='t0' style='font-size: 20px;; font-style: italic;'></div>
+    <br>
+    <br>
+    <div id='options' style='opacity: 0; display: flex; align-items: center; flex-direction: column; padding: 25px; border: 1px solid #333333; border-radius: 10px;'>
+        <div style='width: 100%;'>
+            <label for='t1'>Balls' Speed:</label>
+            <label for='t1'>from</label>
+            <input id='t1' type='number' placeholder='1 - 5'>
+            <label for='t2'>to</label>
+            <input id='t2' type='number' placeholder='1 - 5'>
+        </div>
+        <br>
+        <div>
+            <label for='t3'>Balls' radius:</label>
+            <label for='t3'>from</label>
+            <input id='t3' type='number' placeholder='1 - 25'>
+            <label for='t4'>to</label>
+            <input id='t4' type='number' placeholder='1 - 25'>
+        </div>
+        <br>
+        <div class='options'>
+            <label for='cb0' style="color: pink;">Unrealistic collisions of balls (&#x1f44e)</label>
+            <input type='checkbox' id='cb0'>
+        </div>
+        <br>
+        <div class='options'>
+            <label for='cb1'>Play audio when balls bounce</label>
+            <input type='checkbox' id='cb1'>
+        </div>
+        <br>
+        <div class='options'>
+            <label for='cb2'>Constant changes in the color of the balls</label>
+            <input type='checkbox' id='cb2'>
+        </div>
+        <br>
+        <div class='options'>
+            <label for='cb3'>Aim trainer mode (clickable balls)</label>
+            <input type='checkbox' id='cb3'>
+        </div>
+        <br>
+        <div class='options'>
+            <div>
+                <hr style='transform: rotate(90deg); padding: 0; margin: 0; display: inline; margin-right: 20px; border-color: rgba(255, 255, 255, 0.25);'>
+                <label for='cb4' style='display: inline;'>Balls' particles</label>
+            </div>
+            <input type='checkbox' id='cb4'>
+        </div>
+        <br>
+        <div class='options'>
+            <div>
+                <hr style='transform: rotate(90deg); padding: 0; margin: 0; display: inline; margin-right: 20px; border-color: rgba(255, 255, 255, 0.25);'>
+                <label for='cb5' style='display: inline;'>Play audio when balls get popped</label>
+            </div>
+            <input type='checkbox' id='cb5'>
+        </div>
+        <br>
+        <div class='options'>
+            <label for='cb6'>Show FPS (Not sure if it's accurate)</label>
+            <input type='checkbox' id='cb6'>
+        </div>
+    </div>
+    <br>
+    <br>
+    <button id='cB' style='opacity: 0; width: 250px; height: 50px; background: transparent; font-size: 25px;'>CONTINUE</button>
+    <script src="index.js"></script>
+</body>
+</html>
