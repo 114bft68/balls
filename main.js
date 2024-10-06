@@ -1,3 +1,5 @@
+import FPS from "https://114bft68.github.io/FPS-Meter-for-JS-WebAPI-requestAnimationFrame/fps.js";
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 setInterval(() => {
@@ -85,20 +87,16 @@ class ball {
     }
 }
 
-let fps, last;
-function drawBalls() {
-    let now = window.performance.now();
+let animationFrame = new FPS(() => {
     balls.forEach((ball) => {
         ball.draw();
         ball.XYUpdate();
         settings.collision ? ball.collision() : void(0);
     });
     particles.length > 0 ? particles.map((p) => p.draw()) : void(0);
-    fps = 1000 / (now - last);
-    last = now;
-    requestAnimationFrame(drawBalls);
-}
-requestAnimationFrame(drawBalls);
+});
+
+animationFrame.start();
 
 if (settings.fps) {
     let c = document.createElement('p');
@@ -106,7 +104,7 @@ if (settings.fps) {
     document.body.insertBefore(c, canvas);
     c.innerHTML = 'FPS:';
     setInterval(() => {
-        c.innerHTML = `FPS:${fps.toFixed(1)}`;
+        c.innerHTML = `FPS:${animationFrame.getCurrentFPS().toFixed(1)}`;
     }, 1000);
 }
 
