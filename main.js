@@ -131,9 +131,17 @@ document.getElementById('delete').addEventListener('click', () => {
 });
 
 if (settings.aim) {
+    function isMobile() {
+        try {
+            document.createEvent('TouchEvent');
+            return true;
+        } catch(error) {
+            return false;
+        }
+    }
     canvas.addEventListener('click', (e) => {
-        let ux = e.clientX;
-        let uy = e.clientY;
+        let ux = isMobile() ? e.touches[0].clientX : e.clientX;
+        let uy = isMobile() ? e.touches[0].clientY : e.clientY;
         let targetBall = balls.find((b) => Math.sqrt(Math.pow(ux - b.x, 2) + Math.pow(uy - b.y, 2)) <= b.r);
         if (targetBall !== undefined) {
             settings.popSound ? new Audio('./audio/pop.wav').play() : void(0);
