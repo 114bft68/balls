@@ -131,37 +131,20 @@ document.getElementById('delete').addEventListener('click', () => {
 });
 
 if (settings.aim) {
-    function isMobile() {
-        try {
-            document.createEvent('TouchEvent');
-            return true;
-        } catch {
-            return false;
-        }
-    }
-
-    function canvasEvent(event, cX, cY) {
-        canvas.addEventListener(event, (e) => {
-            let ux = cX;
-            let uy = cY;
-            let targetBall = balls.find((b) => Math.sqrt(Math.pow(ux - b.x, 2) + Math.pow(uy - b.y, 2)) <= b.r);
-            if (targetBall !== undefined) {
-                settings.popSound ? new Audio('./audio/pop.wav').play() : void(0);
-                if (settings.particles) {
-                    for (let i = 0; i < Math.round(Math.random() * 3 + 3); i++) {
-                        particles.push(new particle(targetBall.r, targetBall.x, targetBall.y, targetBall.color));
-                    }
+    canvas.addEventListener('click', (e) => {
+        let ux = e.clientX;
+        let uy = e.clientY;
+        let targetBall = balls.find((b) => Math.sqrt(Math.pow(ux - b.x, 2) + Math.pow(uy - b.y, 2)) <= b.r);
+        if (targetBall !== undefined) {
+            settings.popSound ? new Audio('./audio/pop.wav').play() : void(0);
+            if (settings.particles) {
+                for (let i = 0; i < Math.round(Math.random() * 3 + 3); i++) {
+                    particles.push(new particle(targetBall.r, targetBall.x, targetBall.y, targetBall.color));
                 }
-                balls.splice(balls.indexOf(targetBall), 1);
             }
-        });
-    }
-
-    if (isMobile()) {
-        canvasEvent('touchstart', e.touches[0].clientX, e.touches[0].clientY);
-    } else {
-        canvasEvent('click', e.clientX, e.clientY);
-    }
+            balls.splice(balls.indexOf(targetBall), 1);
+        }
+    });
 }
 
 let particles = [];
