@@ -7,6 +7,7 @@
     padding: 0;
 }
 
+html,
 body {
     display: flex;
     align-items: center;
@@ -14,6 +15,8 @@ body {
     flex-direction: column;
     user-select: none;
     background: #0d1117;
+    width: 100svw;
+    height: 100svh;
 }
 
 @keyframes title {
@@ -26,6 +29,34 @@ body {
     animation-name: title;
     animation-duration: 5s;
     animation-iteration-count: infinite;
+    z-index: 2;
+    position: fixed;
+    top: 45px;
+    font-size: 45px;
+    font-weight: bold;
+    padding: 0;
+    margin: 0;
+}
+
+#buttonsContainer {
+    z-index: 2;
+    position: fixed;
+    top: 106px;
+    color: white;
+}
+
+#spawn,
+#delete {
+    display: inline;
+    padding: 4px;
+}
+
+a {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+    font-size: 20px;
 }
 
 a:link {
@@ -42,4 +73,37 @@ a:visited {
 
 a:active {
     color: gray;
+}
+
+#canvas {
+    z-index: 1;
+    height: 100vh;
+    width: 100vw;
+}
+
+.fps {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: white;
+    font-size: 40px;
+}
+
+@media only screen and (max-width: 400px) {
+    #title {
+        font-size: 27px;
+    }
+
+    #buttonsContainer {
+        font-size: 9.6px;
+        top: 81.6px;
+    }
+
+    a {
+        font-size: 12px;
+    }
+
+    .fps {
+        font-size: 24px;
+    }
 }

@@ -1,10 +1,16 @@
 import FPS from "https://114bft68.github.io/FPS-Meter-for-JS-WebAPI-requestAnimationFrame/fps.js";
 
+let isMobile;
+try {
+    document.createEvent('TouchEvent');
+    isMobile = true;
+} catch {
+    isMobile = false;
+}
+
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 setInterval(() => {
-    canvas.style.height = window.innerHeight;
-    canvas.style.width = window.innerWidth;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 }, 1);
@@ -100,7 +106,7 @@ animationFrame.start();
 
 if (settings.fps) {
     let c = document.createElement('p');
-    c.setAttribute('style', `position: absolute; top: 15px; left: 15px; padding: 0; margin: 0; color: white; font-size: 40px;`);
+    c.className = 'fps';
     document.body.insertBefore(c, canvas);
     c.innerHTML = 'FPS:';
     setInterval(() => {
@@ -131,9 +137,9 @@ document.getElementById('delete').addEventListener('click', () => {
 });
 
 if (settings.aim) {
-    canvas.addEventListener('click', (e) => {
-        let ux = e.clientX;
-        let uy = e.clientY;
+    const handleClick = (e) => {
+        let ux = isMobile ? e.changedTouches[0].clientX : e.clientX;
+        let uy = isMobile ? e.changedTouches[0].clientY : e.clientY;
         let targetBall = balls.find((b) => Math.sqrt(Math.pow(ux - b.x, 2) + Math.pow(uy - b.y, 2)) <= b.r);
         if (targetBall !== undefined) {
             settings.popSound ? new Audio('./audio/pop.wav').play() : void(0);
@@ -144,7 +150,9 @@ if (settings.aim) {
             }
             balls.splice(balls.indexOf(targetBall), 1);
         }
-    });
+    }
+
+    canvas.addEventListener(isMobile ? 'touchend' : 'click', handleClick);
 }
 
 let particles = [];
