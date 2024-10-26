@@ -1,13 +1,5 @@
 import FPS from "https://114bft68.github.io/FPS-Meter-for-JS-WebAPI-requestAnimationFrame/fps.js";
 
-let isMobile;
-try {
-    document.createEvent('TouchEvent');
-    isMobile = true;
-} catch {
-    isMobile = false;
-}
-
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 setInterval(() => {
@@ -47,20 +39,19 @@ class ball {
     }
 
     draw() {
-        if (this.x - this.r <= 0) {
-            this.left = false;
-            play();
-        } else if (this.x + this.r >= canvas.width) {
-            this.left = true;
-            play();
+        const directionChange = (thisXOrY, thisLeftOrTop, canvasWidthOrHeight) => {
+            if (thisXOrY - this.r <= 0) {
+                thisLeftOrTop = false;
+                play();
+            } else if (thisXOrY + this.r >= canvasWidthOrHeight) {
+                thisLeftOrTop = true;
+                play();
+            }
         }
-        if (this.y - this.r <= 0) {
-            this.top = false;
-            play();
-        } else if (this.y + this.r >= canvas.height) {
-            this.top = true;
-            play();
-        }
+
+        directionChange(this.x, this.left, canvas.width);
+        directionChange(this.y, this.top, canvas.height);
+
         ctx.fillStyle = (settings.color ? `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})` : this.color);
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
@@ -137,6 +128,14 @@ document.getElementById('delete').addEventListener('click', () => {
 });
 
 if (settings.aim) {
+    let isMobile;
+    try {
+        document.createEvent('TouchEvent');
+        isMobile = true;
+    } catch {
+        isMobile = false;
+    }
+
     const handleClick = (e) => {
         let ux = isMobile ? e.changedTouches[0].clientX : e.clientX;
         let uy = isMobile ? e.changedTouches[0].clientY : e.clientY;

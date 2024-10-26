@@ -34,8 +34,6 @@ body {
     top: 45px;
     font-size: 45px;
     font-weight: bold;
-    padding: 0;
-    margin: 0;
 }
 
 #buttonsContainer {
@@ -89,7 +87,9 @@ a:active {
     font-size: 40px;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 582px) {
+    /* original *= 0.6 */
+
     #title {
         font-size: 27px;
     }

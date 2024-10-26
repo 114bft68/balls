@@ -51,11 +51,8 @@ body {
 input[type='number'] {
     height: 25px;
     width: 150px;
-    padding: 0;
-    margin: 0;
     border: none;
     background-color: transparent;
-    border-bottom: 1px solid rgba(192, 192, 192, 0.3);
     text-align: center;
     outline: none;
 }
@@ -67,8 +64,6 @@ input[type='number'] {
 }
 
 input[type='checkbox'] {
-    padding: 0;
-    margin: 0;
     height: 20px;
     width: 20px;
 }
@@ -118,7 +113,7 @@ input[type='checkbox']:hover {
     font-size: 20px;
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 582px) {
     /* original *= 0.6 */
 
     #title {
