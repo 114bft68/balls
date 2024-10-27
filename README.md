@@ -1,4 +1,4 @@
-# A Website with Balls Bouncing around<br>
-created for those who have nothing to do<br>
-this website is a little bit mobile-unfriendly<br>
+# A Website with Balls Bouncing around
+created for those who have nothing to do\
+this website is pretty mobile-friendly :)\
 => https://114bft68.github.io/balls/
