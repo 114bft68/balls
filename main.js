@@ -15,22 +15,11 @@ function play() {
     }
 }
 
-function spawnLocations(a, statement) {
-    if (statement) {
-        a.x = Math.random() * (canvas.width - a.r) + a.r;
-        a.y = Math.random() * (canvas.height - a.r) + a.r;
-        if (statement) {
-            spawnLocations(a);
-        }
-    }
-}
-
 class ball {
     constructor() {
         this.r = Math.random() * (settings.radiusT - settings.radiusF) + settings.radiusF;
         this.x = Math.random() * (canvas.width - this.r) + this.r;
         this.y = Math.random() * (canvas.height - this.r) + this.r;
-        spawnLocations(this, balls.some((b) => Math.sqrt(Math.pow(b.x - this.x, 2) + Math.pow(b.y - this.y, 2)) < (b.r + this.r)));
         this.top = [true, false][Math.floor(Math.random() * 2)];
         this.left = [true, false][Math.floor(Math.random() * 2)];
         this.color = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
@@ -38,38 +27,20 @@ class ball {
         this.YSpeed = Math.random() * (settings.speedT - settings.speedF) + settings.speedF;
     }
 
+    XYUpdate() {
+        this.x - this.r <= 0 ? (this.left = false, play()) : this.x + this.r >= canvas.width ? (this.left = true, play()) : void(0);
+        this.y - this.r <= 0 ? (this.top = false, play()) : this.y + this.r >= canvas.height ? (this.top = true, play()) : void(0);
+
+        this.left == true ? this.x -= this.XSpeed : this.x += this.XSpeed;
+        this.top == true ? this.y -= this.YSpeed : this.y += this.YSpeed;
+    }
+
     draw() {
-        const directionChange = (thisXOrY, thisLeftOrTop, canvasWidthOrHeight) => {
-            if (thisXOrY - this.r <= 0) {
-                thisLeftOrTop = false;
-                play();
-            } else if (thisXOrY + this.r >= canvasWidthOrHeight) {
-                thisLeftOrTop = true;
-                play();
-            }
-        }
-
-        directionChange(this.x, this.left, canvas.width);
-        directionChange(this.y, this.top, canvas.height);
-
         ctx.fillStyle = (settings.color ? `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})` : this.color);
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
         ctx.closePath();
         ctx.fill();
-    }
-
-    XYUpdate() {
-        if (this.left == true) {
-            this.x -= this.XSpeed;
-        } else {
-            this.x += this.XSpeed;
-        }
-        if (this.top == true) {
-            this.y -= this.YSpeed;
-        } else {
-            this.y += this.YSpeed;
-        }
     }
 
     collision() {
@@ -86,8 +57,8 @@ class ball {
 
 let animationFrame = new FPS(() => {
     balls.forEach((ball) => {
-        ball.draw();
         ball.XYUpdate();
+        ball.draw();
         settings.collision ? ball.collision() : void(0);
     });
     particles.length > 0 ? particles.map((p) => p.draw()) : void(0);
