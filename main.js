@@ -2,10 +2,9 @@ import FPS from "https://114bft68.github.io/FPS-Meter-for-JS-WebAPI-requestAnima
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-setInterval(() => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}, 1);
+[canvas.width, canvas.height] = [window.innerWidth, window.innerHeight];
+window.addEventListener('resize', () => [canvas.width, canvas.height] = [window.innerWidth, window.innerHeight]);
+
 let balls = [];
 const settings = JSON.parse(localStorage.getItem('settings'));
 
@@ -56,6 +55,7 @@ class ball {
 }
 
 let animationFrame = new FPS(() => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     balls.forEach((ball) => {
         ball.XYUpdate();
         ball.draw();

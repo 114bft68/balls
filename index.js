@@ -38,12 +38,13 @@ let interval = setInterval(() => {
 setInterval(() => {
     tbs.forEach((tb) => {
         if (tb.value === '' || (tb.value <= 0 && tb.value !== '') || (tb.value > 5 && (tb === t1 || tb === t2)) || (tb.value > 25 && (tb === t3 || tb === t4))) {
-            tb.style.borderBottom = '1px solid rgba(255, 215, 0, .4)';
+            tb.style.borderBottom = '.1vw solid rgba(255, 215, 0, .4)';
         } else {
-            tb.style.borderBottom = '1px solid rgba(192, 192, 192, 0.3)';
+            tb.style.borderBottom = '.1vw solid rgba(192, 192, 192, 0.3)';
         }
     });
-    id('cb3').checked === false ? id('cb4').checked = id('cb5').checked = false : void(0); // cb4 and cb5 requires cb3 to be selected
+
+    if (id('cb3').checked === false) id('cb4').checked = id('cb5').checked = false;// cb4 and cb5 requires cb3 to be selected
 }, 1);
 
 id('cB').addEventListener('click', () => {
@@ -65,11 +66,9 @@ id('cB').addEventListener('click', () => {
         location.href = 'balls.html';
     } else {
         tbs.forEach((tb) => {
-            if (tb.style.borderBottom === '1px solid rgba(255, 215, 0, 0.4)') {
-                tb.style.transition = 'all 0.35s';
+            if (tb.style.borderBottom === '.1vw solid rgba(255, 215, 0, 0.4)') {
                 tb.style.transform = 'scale(1.03)';
                 setTimeout(() => {
-                    tb.style.transition = 'all 0.35s';
                     tb.style.transform = 'scale(1)';
                 }, 200);
             }
@@ -82,8 +81,8 @@ for (let element in elements) {
     elements[element].addEventListener('click', (e) => {
         if (!id('cb3').checked) {
             e.target.checked = false;
-            let t = Array.from(document.getElementsByTagName('label')).find((l) => l.getAttribute('for') === 'cb3');
-            t.style.transition = 'all 0.3s';
+
+            let t = id('cb3').labels[0];
             t.style.color = 'red';
             setTimeout(() => {
                 t.style.color = 'white';
@@ -93,23 +92,11 @@ for (let element in elements) {
 }
 
 document.addEventListener('keydown', (e) => {
-    e.key === 'Tab' ? e.preventDefault() : void(0);
+    if (e.key === 'Tab') e.preventDefault();
 });
 
 id('cb0').addEventListener('click', () => {
-    if (id('cb0').checked && !document.querySelector('.reminder')) {
-        let create = document.createElement('div');
-        create.className = 'reminder';
-        document.body.insertBefore(create, id('options'));
-        create.innerHTML = 'the collisions are insanely unrealistic';
-        setTimeout(() => {
-            create.style.top = '10px';
-        }, 1);
-        setTimeout(() => {
-            create.style.top = '-110px';
-            create.addEventListener('transitionend', () => {
-                create.remove();
-            });
-        }, 1500);
+    if (id('cb0').checked) {
+        window.alert(`I suggest unchecking "${id('cb0').labels[0].innerText}"`);
     }
-});
+}, { passive: true });
