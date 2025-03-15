@@ -8,7 +8,7 @@ window.addEventListener('resize', () => [canvas.width, canvas.height] = [window.
 let balls = [];
 const settings = JSON.parse(localStorage.getItem('settings'));
 
-function play() {
+function playB() {
     if (settings.bounceSound) {
         new Audio('./audio/bounce.wav').play();
     }
@@ -27,8 +27,8 @@ class ball {
     }
 
     XYUpdate() {
-        this.x - this.r <= 0 ? (this.left = false, play()) : this.x + this.r >= canvas.width ? (this.left = true, play()) : void(0);
-        this.y - this.r <= 0 ? (this.top = false, play()) : this.y + this.r >= canvas.height ? (this.top = true, play()) : void(0);
+        this.x - this.r <= 0 ? (this.left = false, playB()) : this.x + this.r >= canvas.width ? (this.left = true, playB()) : void(0);
+        this.y - this.r <= 0 ? (this.top = false, playB()) : this.y + this.r >= canvas.height ? (this.top = true, playB()) : void(0);
 
         this.left == true ? this.x -= this.XSpeed : this.x += this.XSpeed;
         this.top == true ? this.y -= this.YSpeed : this.y += this.YSpeed;
@@ -55,13 +55,13 @@ class ball {
 }
 
 let animationFrame = new FPS(() => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (!settings.tail) ctx.clearRect(0, 0, canvas.width, canvas.height);
     balls.forEach((ball) => {
         ball.XYUpdate();
         ball.draw();
-        settings.collision ? ball.collision() : void(0);
+        if (settings.collision) ball.collision();
     });
-    particles.length > 0 ? particles.map((p) => p.draw()) : void(0);
+    if (particles.length > 0) particles.map((p) => p.draw());
 });
 
 animationFrame.start();
@@ -112,7 +112,7 @@ if (settings.aim) {
         let uy = isMobile ? e.changedTouches[0].clientY : e.clientY;
         let targetBall = balls.find((b) => Math.sqrt(Math.pow(ux - b.x, 2) + Math.pow(uy - b.y, 2)) <= b.r);
         if (targetBall !== undefined) {
-            settings.popSound ? new Audio('./audio/pop.wav').play() : void(0);
+            if (settings.popSound) new Audio('./audio/pop.wav').play();
             if (settings.particles) {
                 for (let i = 0; i < Math.round(Math.random() * 3 + 3); i++) {
                     particles.push(new particle(targetBall.r, targetBall.x, targetBall.y, targetBall.color));
@@ -136,7 +136,7 @@ class particle {
     }
 
     draw() {
-        regex.exec(this.color)[0] === '0.00)' ? particles.splice(particles.indexOf(this), 1) : void(0);
+        if (regex.exec(this.color)[0] === '0.00)') particles.splice(particles.indexOf(this), 1);
         ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);

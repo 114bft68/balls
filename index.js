@@ -16,7 +16,8 @@ id('cb2').checked = settings.color || false;
 id('cb3').checked = settings.aim || false;
 id('cb4').checked = settings.particles || false;
 id('cb5').checked = settings.popSound || false;
-id('cb6').checked = settings.fps || false;
+id('cb6').checked = settings.tail || false;
+id('cb7').checked = settings.fps || false;
 
 let text = 'before you proceed...';
 let i = 0;
@@ -30,7 +31,8 @@ let interval = setInterval(() => {
         id('options').style.opacity ='1'; 
         setTimeout(() => {
             id('cB').style.transition = 'all 0.75s';
-            id('cB').style.opacity ='1'; 
+            id('cB').style.opacity = '1';
+            id('cB').style.transition = 'all 0.35s';
         }, 200);
     }
 }, 25);
@@ -38,9 +40,9 @@ let interval = setInterval(() => {
 setInterval(() => {
     tbs.forEach((tb) => {
         if (tb.value === '' || (tb.value <= 0 && tb.value !== '') || (tb.value > 5 && (tb === t1 || tb === t2)) || (tb.value > 25 && (tb === t3 || tb === t4))) {
-            tb.style.borderBottom = '.1vw solid rgba(255, 215, 0, .4)';
+            tb.style.borderBottom = 'var(--size0p1) solid rgba(255, 215, 0, .4)';
         } else {
-            tb.style.borderBottom = '.1vw solid rgba(192, 192, 192, 0.3)';
+            tb.style.borderBottom = 'var(--size0p1) solid rgba(192, 192, 192, 0.3)';
         }
     });
 
@@ -60,13 +62,14 @@ id('cB').addEventListener('click', () => {
             "aim": id('cb3').checked,
             "particles": id('cb4').checked,
             "popSound": id('cb5').checked,
-            "fps": id('cb6').checked
+            "tail": id('cb6').checked,
+            "fps": id('cb7').checked
         };
         localStorage.setItem('settings', JSON.stringify(settings));
         location.href = 'balls.html';
     } else {
         tbs.forEach((tb) => {
-            if (tb.style.borderBottom === '.1vw solid rgba(255, 215, 0, 0.4)') {
+            if (tb.style.borderBottom === 'var(--size0p1) solid rgba(255, 215, 0, 0.4)') {
                 tb.style.transform = 'scale(1.03)';
                 setTimeout(() => {
                     tb.style.transform = 'scale(1)';

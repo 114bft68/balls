@@ -1,98 +1,112 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
 :root {
-    --size0p1: calc((.1vw + .1vh) / 2);
+    --size0p1 : calc((.1vw + .1vh) / 2);
     --size1p25: calc((1.25vw + 1.25vh) / 2);
-    --size2p0: calc((2vw + 2vh) / 2);
-} /* p stands for "point" */
+    --size2p0 : calc((2vw + 2vh) / 2);
+} /* p stands for "point" */ /* these are used more than once */
 
 html,
 body {
-    display: flex;
-    align-items: center;
+    display        : flex;
+    align-items    : center;
     justify-content: center;
-    flex-direction: column;
-    user-select: none;
-    background: #0d1117;
-    width: 100%;
-    height: 100%;
+    flex-direction : column;
+    user-select    : none;
+    background     : #0d1117;
+    width          : 100%;
+    height         : 100%;
 }
 
 * {
-    cursor: url('images/dot.svg') 16 16, auto;
-    margin: 0;
-    padding: 0;
+    cursor     : url('images/dot.svg') 16 16, auto;
+    margin     : 0;
+    padding    : 0;
     font-family: 'Source Code Pro', sans-serif;
-    color: white;
+    color      : white;
 }
 
 #title {
-    font-size: calc((3.2vw + 3.2vh) / 2);
+    font-size  : calc((3.2vw + 3.2vh) / 2);
     font-weight: bold;
+    transition : text-shadow .2s;
+
+    &:hover {
+        text-shadow: white var(--size0p1) var(--size0p1) var(--size2p0);
+    }
 }
 
 #t0 {
-    font-size: var(--size1p25);
+    font-size : var(--size1p25);
     font-style: italic;
 }
 
 #options {
-    opacity: 0;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    padding: calc((2vw + 2vh) / 2);
-    border: var(--size0p1) solid #333333;
-    border-radius: calc((1vw + 1vh) / 2);
-    max-width: calc((50vw + 50vh) / 2);
-    max-height: 50%;
-    overflow: scroll;
-    scrollbar-width: none;
+    opacity           : 0;
+    display           : flex;
+    align-items       : center;
+    flex-direction    : column;
+    padding           : calc((2vw + 2vh) / 2);
+    border            : var(--size0p1) solid #333333;
+    border-radius     : calc((1vw + 1vh) / 2);
+    max-width         : calc((50vw + 50vh) / 2);
+    max-height        : 50%;
+    overflow          : scroll;
+    scrollbar-width   : none;
     -ms-overflow-style: none;
-    margin-top: var(--size2p0);
-    margin-bottom: var(--size2p0);
+    margin-top        : var(--size2p0);
+    margin-bottom     : var(--size2p0);
+    /* transition set in index.js */
+
+    & * {
+        font-size: calc((1.2vw + 1.2vh) / 2);
+    }
+
+    &::-webkit-scrollbar {
+        display: hidden;
+    }
+
+    & > div {
+        margin-bottom: var(--size2p0);
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
 }
 
-#options * {
-    font-size: calc((1.2vw + 1.2vh) / 2);
-}
+input {
+    &[type='number'] {
+        height          : 100%;
+        min-width       : 25%;
+        border          : none;
+        background-color: transparent;
+        text-align      : center;
+        outline         : none;
+        transition      : all 0.35s;
+        appearance      : textfield;
+    }
 
-#options::-webkit-scrollbar {
-    display: none;
-}
+    &[type='checkbox'] {
+        height: var(--size1p25);
+        width : var(--size1p25);
+        transition: all 0.3s;
 
-input[type='number'] {
-    height: 100%;
-    min-width: 25%;
-    border: none;
-    background-color: transparent;
-    text-align: center;
-    outline: none;
-    transition: all 0.35s;
+        &:hover {
+            transform : scale(1.25);
+        }
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        display: none;
+    }
 }
 
 .options {
-    display: flex;
+    display        : flex;
     justify-content: space-between;
-    width: 100%;
-}
-
-#options > div {
-    margin-bottom: var(--size2p0);
-}
-
-#options > div:last-of-type {
-    margin-bottom: 0;
-}
-
-input[type='checkbox'] {
-    height: var(--size1p25);
-    width: var(--size1p25);
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    display: none;
+    width          : 100%;
 }
 
 #cb3 {
@@ -100,28 +114,48 @@ input::-webkit-inner-spin-button {
 }
 
 #cB {
-    --thickness: calc((.2vw + .2vw) / 2);
-
-    border: var(--size0p1) solid rgba(192, 192, 192, 0.3);
-    border-width: var(--size0p1) var(--size0p1) var(--thickness) var(--thickness);
+    --thickness  : calc((.2vw + .2vw) / 2);
+    
+    border       : var(--size0p1) solid rgba(192, 192, 192, 0.3);
+    border-width : var(--size0p1) var(--size0p1) var(--thickness) var(--thickness);
     border-radius: calc((.5vw + .5vh) / 2);
-    opacity: 0;
-    width: calc((20vw + 20vh) / 2);
-    height: calc((4vw + 4vh) / 2);
-    background: transparent;
-    font-size: var(--size2p0);
-}
+    opacity      : 0;
+    width        : calc((20vw + 20vh) / 2);
+    height       : calc((4vw + 4vh) / 2);
+    background   : transparent;
+    font-size    : var(--size2p0);
+    /* transition set in index.js */
 
-#cB:hover {
-    transition: all 0.35s;
-    transform: scale(1.05);
-}
-
-input[type='checkbox']:hover {
-    transition: all 0.3s;
-    transform: scale(1.25);
+    &:hover {
+        transform: scale(1.05);
+        font-size: calc((1.8vw + 1.8vh) / 2);
+    }
 }
 
 ::placeholder {
     color: #ff9999;
+}
+
+footer {
+    --d     : calc((.6vw + .6vh) / 2);
+    position: fixed;
+    bottom  : var(--d);
+    right   : var(--d);
+
+    & small,
+    & small a {
+
+        font-size : var(--size1p25);
+        transition: color .1s;
+        color     : gray;
+    }
+
+    & small:hover {
+        color: #cbcbcb;
+    }
+
+    & small a:hover {
+        color      : white;
+        text-shadow: #c9c9c9 var(--size0p1) var(--size0p1) var(--size2p0);
+    }
 }
