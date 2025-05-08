@@ -122,7 +122,7 @@ if (settings.aim) {
         }
     }
 
-    canvas.addEventListener(isMobile ? 'touchend' : 'click', handleClick);
+    canvas.addEventListener(isMobile ? 'touchstart' : 'mousedown', handleClick);
 }
 
 let particles = [];
